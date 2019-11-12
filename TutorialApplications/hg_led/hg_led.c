@@ -39,43 +39,43 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>	
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                  // asynchronous messaging API used for inter-thread/inter-process communication
-#include <uORB/topics/led_control.h>    // uORB for led_control
+#include <uORB/uORB.h>               // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/topics/led_control.h> // uORB for led_control
 
-__EXPORT int hg_led_main(int argc, char *argv[]);	// export main for starting in other thread
+__EXPORT int hg_led_main(int argc, char *argv[]); // export main for starting in other thread
 
 int hg_led_main(int argc, char *argv[])
 {
-	// print in console 
+    // print in console 
     PX4_INFO("Hello Hovergames LED");
-    
+
     // structur with led_control paramters
     struct led_control_s led_control;
-    
+
     // fill the structure with 0
     memset(&led_control, 0, sizeof(led_control));
-    
-    // advertise structure for ORB_ID
-    orb_advert_t led_control_pub = orb_advertise(ORB_ID(led_control), &led_control); 
 
-    led_control.num_blinks = 10;                     	// blinks
-    led_control.priority = LED_CONTROL_MAX_PRIORITY; 	// priority
-    led_control.mode = LED_CONTROL_MODE_BLINK_NORMAL;  	// led mode
-    led_control.led_mask = 0xff;                     	// select leds - 0xff for all
-    led_control.color = LED_CONTROL_COLOR_GREEN;     	// color
+    // advertise structure for ORB_ID
+    orb_advert_t led_control_pub = orb_advertise(ORB_ID(led_control), &led_control);
+
+    led_control.num_blinks = 10;                      // blinks
+    led_control.priority = LED_CONTROL_MAX_PRIORITY;  // priority
+    led_control.mode = LED_CONTROL_MODE_BLINK_NORMAL; // led mode
+    led_control.led_mask = 0xff;                      // select leds - 0xff for all
+    led_control.color = LED_CONTROL_COLOR_GREEN;      // color
 
     // publish the message to uORB service
-    orb_publish(ORB_ID(led_control), led_control_pub, &led_control); 
+    orb_publish(ORB_ID(led_control), led_control_pub, &led_control);
 
     // print in console 
-    PX4_INFO("Hovergames LED exit"); 
+    PX4_INFO("Hovergames LED exit");
 
-    return 0;	// return of main function	
+    return 0; // return of main function
 }

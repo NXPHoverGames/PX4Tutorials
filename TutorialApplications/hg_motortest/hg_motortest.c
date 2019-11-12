@@ -39,32 +39,32 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>					
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                  // asynchronous messaging API used for inter-thread/inter-process communication
-#include <uORB/topics/test_motor.h>    // uORB for test_motor
+#include <uORB/uORB.h>              // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/topics/test_motor.h> // uORB for test_motor
 
-__EXPORT int hg_motortest_main(int argc, char *argv[]);	// export main for starting in other thread
+__EXPORT int hg_motortest_main(int argc, char *argv[]); // export main for starting in other thread
 
 int hg_motortest_main(int argc, char *argv[])
 {
-	PX4_INFO("Hello Hovergames MOTORTEST");
-    
-    struct test_motor_s test_motor;                                                // structur with test_motor paramters
-    memset(&test_motor, 0, sizeof(test_motor));                                    // fill the structure with 0
+    PX4_INFO("Hello Hovergames MOTORTEST");
+
+    struct test_motor_s test_motor;                                               // structur with test_motor paramters
+    memset(&test_motor, 0, sizeof(test_motor));                                   // fill the structure with 0
     orb_advert_t test_motor_pub = orb_advertise(ORB_ID(test_motor), &test_motor); // advertise structure for ORB_ID
 
-    test_motor.motor_number = 4;                     	
-    test_motor.value = 0.2; 	
+    test_motor.motor_number = 4;
+    test_motor.value = 0.2;
 
     orb_publish(ORB_ID(test_motor), test_motor_pub, &test_motor); // publish the message to uORB service
 
     PX4_INFO("Hovergames MOTORTEST exit"); // print in console 
 
-    return 0;	// return of main function	
+    return 0; // return of main function
 }

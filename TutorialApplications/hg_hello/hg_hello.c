@@ -39,7 +39,7 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
 
 __EXPORT int hg_hello_main(int argc, char *argv[]);
 

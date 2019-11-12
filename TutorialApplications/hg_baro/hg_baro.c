@@ -38,15 +38,14 @@
  *
  * @author Leutrim Mustafa
  */
-
-#include <px4_config.h>
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/uORB.h>               // asynchronous messaging API used for inter-thread/inter-process communication
 #include <uORB/topics/sensor_baro.h> // uORB for baro
 
 __EXPORT int hg_baro_main(int argc, char *argv[]);
@@ -56,13 +55,13 @@ int hg_baro_main(int argc, char *argv[])
     PX4_INFO("Hello Hovergames baro!");
 
     int baro_sub = orb_subscribe(ORB_ID(sensor_baro)); //subscribe ORB ID
-    orb_set_interval(baro_sub, 200);                    // set the intervall
+    orb_set_interval(baro_sub, 200);                   // set the intervall
 
     px4_pollfd_struct_t fds_baro;
     fds_baro.fd = baro_sub;
     fds_baro.events = POLLIN;
 
-    int counter = 20; 
+    int counter = 20;
 
     for (int i = 1; i <= counter; i++)
     {

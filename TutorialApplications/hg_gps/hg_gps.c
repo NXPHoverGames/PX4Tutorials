@@ -39,16 +39,16 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/uORB.h>                        // asynchronous messaging API used for inter-thread/inter-process communication
 #include <uORB/topics/vehicle_gps_position.h> // uORB for vehicle_gps_position
-#include <uORB/topics/ekf_gps_position.h> // uORB for vehicle_gps_position
+#include <uORB/topics/ekf_gps_position.h>     // uORB for vehicle_gps_position
 
 __EXPORT int hg_gps_main(int argc, char *argv[]);
 
@@ -57,7 +57,7 @@ int hg_gps_main(int argc, char *argv[])
     PX4_INFO("Hello Hovergames GPS!");
 
     int vehicle_gps_position_sub = orb_subscribe(ORB_ID(vehicle_gps_position)); //subscribe ORB ID
-    orb_set_interval(vehicle_gps_position_sub, 200);                    // set the intervall
+    orb_set_interval(vehicle_gps_position_sub, 200);                            // set the intervall
 
     px4_pollfd_struct_t fds_vehicle_gps_position;
     fds_vehicle_gps_position.fd = vehicle_gps_position_sub;
@@ -94,12 +94,11 @@ int hg_gps_main(int argc, char *argv[])
     }
 
     int ekf_gps_position_sub = orb_subscribe(ORB_ID(ekf_gps_position)); //subscribe ORB ID
-    orb_set_interval(ekf_gps_position_sub, 200);                    // set the intervall
+    orb_set_interval(ekf_gps_position_sub, 200);                        // set the intervall
 
     px4_pollfd_struct_t fds_ekf_gps_position;
     fds_ekf_gps_position.fd = ekf_gps_position_sub;
     fds_ekf_gps_position.events = POLLIN;
-
 
     printf("ekf_gps_position\n");
     printf("%02i | latitude | longitude | altitude\n", counter);

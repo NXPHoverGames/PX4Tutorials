@@ -39,9 +39,8 @@
  * @author Leutrim Mustafa
  */
 
-
-#include <px4_config.h>	
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
@@ -55,13 +54,13 @@ __EXPORT int hg_battery_main(int argc, char *argv[]);
 int hg_battery_main(int argc, char *argv[])
 {
     // print in console 
-	PX4_INFO("Hello Hovergames BATTERY!");
+    PX4_INFO("Hello Hovergames BATTERY!");
 
     //subscribe ORB ID
-	int battery_sub = orb_subscribe(ORB_ID(battery_status));
+    int battery_sub = orb_subscribe(ORB_ID(battery_status));
 
-    // set the intervall 
-    orb_set_interval(battery_sub, 200);                      
+    // set the intervall
+    orb_set_interval(battery_sub, 200);
 
     px4_pollfd_struct_t fds_battery;
     fds_battery.fd = battery_sub;
@@ -93,7 +92,7 @@ int hg_battery_main(int argc, char *argv[])
     }
 
     // print in console 
-	PX4_INFO("Hovergames BATTERY exit"); 
+    PX4_INFO("Hovergames BATTERY exit");
 
-	return 0;
+    return 0;
 }

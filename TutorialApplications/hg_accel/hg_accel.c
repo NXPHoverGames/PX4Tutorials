@@ -39,8 +39,8 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
@@ -62,7 +62,7 @@ int hg_accel_main(int argc, char *argv[])
     fds_accel.fd = accel_sub;
     fds_accel.events = POLLIN;
 
-    int counter = 20; 
+    int counter = 20;
     printf("%02i | accel_x | accel_y | accel_z\n", counter);
     printf("-----------------------------------\n");
 

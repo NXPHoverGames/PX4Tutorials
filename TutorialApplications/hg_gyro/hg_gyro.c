@@ -39,14 +39,14 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/uORB.h>               // asynchronous messaging API used for inter-thread/inter-process communication
 #include <uORB/topics/sensor_gyro.h> // uORB for gyro
 
 __EXPORT int hg_gyro_main(int argc, char *argv[]);
@@ -56,13 +56,13 @@ int hg_gyro_main(int argc, char *argv[])
     PX4_INFO("Hello Hovergames gyro!");
 
     int gyro_sub = orb_subscribe(ORB_ID(sensor_gyro)); //subscribe ORB ID
-    orb_set_interval(gyro_sub, 200);                    // set the intervall
+    orb_set_interval(gyro_sub, 200);                   // set the intervall
 
     px4_pollfd_struct_t fds_gyro;
     fds_gyro.fd = gyro_sub;
     fds_gyro.events = POLLIN;
 
-    int counter = 20; 
+    int counter = 20;
     printf("%02i |  gyro_x |  gyro_y |  gyro_z\n", counter);
     printf("-----------------------------------\n");
 

@@ -39,14 +39,14 @@
  * @author Leutrim Mustafa
  */
 
-#include <px4_config.h>
-#include <px4_posix.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/posix.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <poll.h>
 #include <string.h>
 
-#include <uORB/uORB.h>                // asynchronous messaging API used for inter-thread/inter-process communication
+#include <uORB/uORB.h>            // asynchronous messaging API used for inter-thread/inter-process communication
 #include <uORB/topics/input_rc.h> // uORB for input_rc
 
 __EXPORT int hg_rcinput_main(int argc, char *argv[]);
@@ -82,23 +82,25 @@ int hg_rcinput_main(int argc, char *argv[])
                 struct input_rc_s input_rc;
                 /* copy sensors raw data into local buffer */
                 orb_copy(ORB_ID(input_rc), input_rc_sub, &input_rc);
-                
+
                 /* print at the first timethe channel count and a head for the table */
-                if(i == 1) {
+                if (i == 1)
+                {
                     printf("channel_count: %i\n", input_rc.channel_count);
 
-                    for(uint j = 0; j < input_rc.channel_count; j++) {
+                    for (uint j = 0; j < input_rc.channel_count; j++)
+                    {
                         printf("CH%02i  ", j);
                     }
                     printf("\n");
                 }
-                
+
                 /* print for ever channel the value */
-                for(uint j = 0; j < input_rc.channel_count; j++) {
+                for (uint j = 0; j < input_rc.channel_count; j++)
+                {
                     printf("%04i  ", input_rc.values[j]);
                 }
                 printf("\n");
-
             }
         }
     }
